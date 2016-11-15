@@ -30,7 +30,6 @@ var passport          = require('passport');                // https://npmjs.org
 var MongoStore        = require('connect-mongo')(session);  // https://npmjs.org/package/connect-mongo
 var expressValidator  = require('express-validator');       // https://npmjs.org/package/express-validator
 
-//var Employee = require('./models/employee.js');
 /**
  * Create Express app, HTTP server and socket.io listener
  */
@@ -539,48 +538,3 @@ io.on('connection', function (socket) {
     });
   });
 });
-
-
-
-(function(factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['ApiClient', './models/Error', './models/Offer', 'api/DefaultApi'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        // CommonJS-like environments that support module.exports, like Node.
-        module.exports = factory(require('./ApiClient'), require('./models/Error'), require('./models/Offer'), require('./api/DefaultApi'));
-    }
-}(function(ApiClient, Error, Offer, DefaultApi) {
-
-    /**
-     * @module index
-     * @version 0.0.0
-     */
-    var exports = {
-        /**
-         * The ApiClient constructor.
-         * @property {module:ApiClient}
-         */
-        ApiClient: ApiClient,
-        /**
-         * The Error model constructor.
-         * @property {module:model/Error}
-         */
-        Error: Error,
-        /**
-         * The Offer model constructor.
-         * @property {module:model/Offer}
-         */
-        Offer: Offer,
-        /**
-         * The DefaultApi service constructor.
-         * @property {module:api/DefaultApi}
-         */
-        DefaultApi: DefaultApi
-    };
-
-    return exports;
-}));
-
-
-
