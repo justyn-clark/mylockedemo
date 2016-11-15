@@ -117,8 +117,8 @@ config.enhancedSecurity        = true;   // on/off for two factor authentication
 // Facebook
 config.facebookAuth            = true;
 config.facebook                = {};
-config.facebook.clientID       = process.env.FACEBOOK_KEY    || '1299133470117588';
-config.facebook.clientSecret   = process.env.FACEBOOK_SECRET || '8e5e54cc9f1b0e20313a4b5b112c08b8';
+config.facebook.clientID       = process.env.FACEBOOK_KEY    || 'Your Key';
+config.facebook.clientSecret   = process.env.FACEBOOK_SECRET || 'Your Secret';
 
 // Github
 config.githubAuth              = true;
