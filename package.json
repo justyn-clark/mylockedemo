@@ -30,7 +30,8 @@
   ],
   "scripts": {
     "start": "node app.js",
-    "test": "mocha"
+    "test": "mocha",
+    "react": "browserify public/js/script.js -t babelify --outfile public/bundle.js"
   },
   "engines": {
     "node": "4.x.x"
@@ -89,6 +90,7 @@
     "admin-on-rest": "^0.5.1",
     "babel-cli": "^6.18.0",
     "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "chai": "^3.4.0",
