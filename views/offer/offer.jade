@@ -1,0 +1,33 @@
+extends ../layouts/layout
+
+block head
+    title #{application} with React
+
+block styles
+    link(rel='stylesheet', href='/css/page-react.min.css')
+
+block content
+
+    .container
+        #root
+
+block scripts
+    script(src='/lib/react/react.min.js')
+    script(src='/lib/react/JSXTransformer.js')
+    script(src='/lib/browser.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js')
+    script(type='text/jsx').
+        /** @jsx React.DOM */
+
+        render(
+        <Admin restClient={delayedRestClient} title="Example Admin">
+        <Resource name="posts" list={PostList} create={PostCreate} edit={PostEdit} show={PostShow} remove={Delete} icon={PostIcon} />
+        <Resource name="comments" list={CommentList} create={CommentCreate} edit={CommentEdit} remove={Delete} icon={CommentIcon} />
+        </Admin>,
+        document.getElementById('root')
+        );
+
+
+
+
+
