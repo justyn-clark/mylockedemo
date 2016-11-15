@@ -127,6 +127,7 @@
 @brand3:        #FFDBC2;  // Salmon
 @brand4:        #FF7B64;  // Orange
 @brand5:        #E61D46;  // Red
+@brand6:        #009688;  // jc
 
 
 // Boostrap colors in case you need to override them
@@ -149,6 +150,7 @@
 .bg-brand3 {    background-color: @brand3; }
 .bg-brand4 {    background-color: @brand4; }
 .bg-brand5 {    background-color: @brand5; }
+.bg-brand6 {    background-color: @brand6; }
 
 // Bootstrap provides an incomplete grayscale
 // because it doesn't define white and black.
@@ -333,13 +335,13 @@ h1, h2 {
 .jumbotron,
 .mini-tron {
   text-shadow: 0 1px 0 rgba(0,0,0,.2);
-  background-color: @brand1;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(@brand1-darker), to(@brand1));
-  background-image: -webkit-linear-gradient(top, @brand1-darker 0%, @brand1 100%);
-  background-image:      -o-linear-gradient(top, @brand1-darker 0%, @brand1 100%);
-  background-image:         linear-gradient(to bottom, @brand1-darker 0%, @brand1 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@brand1-darker', endColorstr='@brand1', GradientType=0);
-  background-repeat: repeat-x;
+  background-color: @brand6;
+  //background-image: -webkit-gradient(linear, left top, left bottom, from(@brand1-darker), to(@brand1));
+  //background-image: -webkit-linear-gradient(top, @brand1-darker 0%, @brand1 100%);
+  //background-image:      -o-linear-gradient(top, @brand1-darker 0%, @brand1 100%);
+  //background-image:         linear-gradient(to bottom, @brand1-darker 0%, @brand1 100%);
+  //filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@brand1-darker', endColorstr='@brand1', GradientType=0);
+  //background-repeat: repeat-x;
 }
 
 .jumbotron {
@@ -420,14 +422,14 @@ h1, h2 {
 }
 
 .jumbotron .btn {
-  width: 100%;
+  width: auto;
   padding: 10px 20px;
   font-size: 22px;
 }
 
 @media (min-width: 768px) {
   .jumbotron .btn {
-    width: 100%;
+    width: auto;
     padding: 15px 30px;
     font-size: 28px;
   }
