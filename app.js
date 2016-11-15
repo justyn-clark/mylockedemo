@@ -30,6 +30,9 @@ var passport          = require('passport');                // https://npmjs.org
 var MongoStore        = require('connect-mongo')(session);  // https://npmjs.org/package/connect-mongo
 var expressValidator  = require('express-validator');       // https://npmjs.org/package/express-validator
 
+require("babel-core").transform("code", {
+    plugins: ["transform-react-jsx"]
+});
 /**
  * Create Express app, HTTP server and socket.io listener
  */

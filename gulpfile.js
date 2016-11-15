@@ -79,8 +79,7 @@ var paths = {
     'less/page-colors.less',
     'less/page-dashboard.less',
     'less/page-privacy.less',
-    'less/page-react.less',
-    'less/slide.less'
+    'less/page-react.less', 'less/slide.less'
   ]
 };
 
