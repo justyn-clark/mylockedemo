@@ -30,7 +30,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "mocha",
-    "bbl": "webpack public/main.js public/bundle.js",
+    "bbl": "webpack public/main.js public/bundle/bundle.js",
     "auto": "webpack",
     "rebundle": "webpack"
   },

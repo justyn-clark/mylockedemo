@@ -30,7 +30,7 @@ var passport          = require('passport');                // https://npmjs.org
 var MongoStore        = require('connect-mongo')(session);  // https://npmjs.org/package/connect-mongo
 var expressValidator  = require('express-validator');       // https://npmjs.org/package/express-validator
 
-var dbR = require('./models/db.js');  // db.js must be required before routes.js
+var db = require('./models/db.js');  // db.js must be required before routes.js
 var routes = require('./routes/routes.js');
 
 /**
