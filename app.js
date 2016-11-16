@@ -30,6 +30,9 @@ var passport          = require('passport');                // https://npmjs.org
 var MongoStore        = require('connect-mongo')(session);  // https://npmjs.org/package/connect-mongo
 var expressValidator  = require('express-validator');       // https://npmjs.org/package/express-validator
 
+var dbR = require('./models/db.js');  // db.js must be required before routes.js
+var routes = require('./routes/routes.js');
+
 /**
  * Create Express app, HTTP server and socket.io listener
  */
@@ -37,6 +40,25 @@ var expressValidator  = require('express-validator');       // https://npmjs.org
 var app    = module.exports = express();  // export app for testing ;)
 var server = require('http').Server(app);
 var io     = require('socket.io')(server);
+
+var routes = require('./routes/routes.js');
+
+
+
+// app.use(bodyparser.json());
+// app.use(bodyparser.urlencoded({extended:false}));
+app.use(session({secret: "secret",  resave : true,  saveUninitialized : false}));
+
+app.post('/auth', routes.authHandler);
+app.post('/register', routes.registerUserHandler);
+
+// REST Routes
+app.get('/api/groceryitem', routes.getAllHandler);  // return all tech records
+app.get('/api/groceryitem/:ITEMID', routes.getOneHandler);  // return one record
+app.post('/api/groceryitem', routes.postOneHandler); // add new tech record
+app.put('/api/groceryitem/:ITEMID', routes.updateOneHandler); // update a record
+app.delete('/api/groceryitem/:ITEMID', routes.deleteOneHandler); // detete a record
+
 
 /**
  * Configure Mongo Database

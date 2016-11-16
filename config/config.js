@@ -98,13 +98,13 @@ config.loginAttempts.expires   = '20m';
 
 // Who are we sending email as?
 config.smtp                    = {};
-config.smtp.name               = process.env.SMTP_FROM_NAME    || 'justyn';
-config.smtp.address            = process.env.SMTP_FROM_ADDRESS || 'justyn@justynclark.com';
+config.smtp.name               = process.env.SMTP_FROM_NAME    || 'ijustynclark';
+config.smtp.address            = process.env.SMTP_FROM_ADDRESS || 'ijustynclark@gmail.com';
 
 // How are we sending it?
 config.gmail                   = {};
-config.gmail.user              = process.env.SMTP_USERNAME || 'justyn@justynclark.com';
-config.gmail.password          = process.env.SMTP_PASSWORD || 'appspecificpassword';
+config.gmail.user              = process.env.SMTP_USERNAME || 'ijustynclark@gmail.com';
+config.gmail.password          = process.env.SMTP_PASSWORD || '';
 
 /**
  * Authorization Configuration
