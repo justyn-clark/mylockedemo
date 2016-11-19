@@ -7,45 +7,30 @@ block styles
   link(rel='stylesheet', href='/lib/animate.css/animate.css')
 
 block content
-  .white
-    .container.text-center.jumbotron
-      h1.animated.bounceInLeft My Lucke App
-      //.row
-      //  .col-md-12
-      //    img.center-block.img-responsive.animated.bounceInLeft(alt='Skeleton App', src='img/Octocat.png', width='400px')
-      .row
-        .col-md-12
-          a.btn.btn-white(href='/login', role='button') Sign in
+    section.hero.text-center
+      .container.text-center.jumbotron.intro
+        h1 Changing the World Through Design
+          p.lead Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.
+          a.btn.button.hollow(href='/login', role='button') Sign up
+
+
+section#about
+      .text-center.jumbotron
+        h1 My Lucke App
+        .row
+    section#about
+      .text-center.jumbotron
+        h1 My Lucke App
+        .row
+    section#about
+      .text-center.jumbotron
+        h1 My Lucke App
+        .row
 
 
 //- Page-specific stuff
 block scripts
 
-
-  //- Tweak the styles a bit...
-  style.
-    .github-count {
-      margin-top:20px;
-      font-size: 20px;
-      text-align: center;
-    }
-    .odometer-label {
-      margin-right: 10px;
-      line-height: 1;
-      vertical-align: middle;
-    }
-    .odometer {
-      padding: 13px 21px 11px;
-      margin: auto;
-      line-height: 1 !important;
-      border-radius: 6px;
-    }
-    .odometer-label a {
-      text-decoration: none;
-    }
-    .odometer-label a:hover {
-      color: #B10DC9;
-    }
 
   script.
     $(document).ready(function() {

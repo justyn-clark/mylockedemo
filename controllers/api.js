@@ -41,11 +41,11 @@ module.exports.controller = function (app) {
    * List of API examples.
    */
 
-  app.get('/api', function (req, res) {
-    res.render('api/index', {
-      url: req.url
-    });
-  });
+  // app.get('/api', function (req, res) {
+  //   res.render('api/index', {
+  //     url: req.url
+  //   });
+  // });
 
   /**
    * GET /api/react

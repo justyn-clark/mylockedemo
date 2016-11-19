@@ -30,12 +30,6 @@ var passport          = require('passport');                // https://npmjs.org
 var MongoStore        = require('connect-mongo')(session);  // https://npmjs.org/package/connect-mongo
 var expressValidator  = require('express-validator');       // https://npmjs.org/package/express-validator
 
-<<<<<<< HEAD
-var db = require('./models/db.js');  // db.js must be required before routes.js
-var routes = require('./routes/routes.js');
-
-=======
->>>>>>> parent of b6f2090... add react
 /**
  * Create Express app, HTTP server and socket.io listener
  */
@@ -43,6 +37,29 @@ var routes = require('./routes/routes.js');
 var app    = module.exports = express();  // export app for testing ;)
 var server = require('http').Server(app);
 var io     = require('socket.io')(server);
+
+/*
+* offers
+* */
+
+var db = require('./models/db.js');  // db.js must be required before routes.js
+var routes = require('./routes/routes.js');
+
+
+app.use(session({secret: "secret",  resave : true,  saveUninitialized : false}));
+
+app.post('/auth', routes.authHandler);
+app.post('/register', routes.registerUserHandler);
+
+// REST Routes
+app.get('/api/offer', routes.getAllHandler);  // return all tech records
+app.get('/api/offer/', routes.getOneHandler);  // return one record
+app.post('/api/offer', routes.postOneHandler); // add new tech record
+app.put('/api/offer/:ITEMID', routes.updateOneHandler); // update a record
+app.delete('/api/offer/:ITEMID', routes.deleteOneHandler); // detete a record
+
+
+
 
 /**
  * Configure Mongo Database
@@ -53,8 +70,8 @@ var db = mongoose.connection;
 
 // Use Mongo for session store
 config.session.store  = new MongoStore({
-  mongooseConnection: db,
-  autoReconnect: true
+    mongooseConnection: db,
+    autoReconnect: true
 });
 
 /**
@@ -91,48 +108,48 @@ app.locals.moment = require('moment');
 app.locals.numeral = require('numeral');
 
 if (app.get('env') === 'development') {
-  // Jade options: Don't minify html, debug intrumentation
-  app.locals.pretty = true;
-  app.locals.compileDebug = true;
-  // Turn on console logging in development
-  app.use(morgan('dev'));
-  // Turn off caching in development
-  // This sets the Cache-Control HTTP header to no-store, no-cache,
-  // which tells browsers not to cache anything.
-  app.use(helmet.nocache());
+    // Jade options: Don't minify html, debug intrumentation
+    app.locals.pretty = true;
+    app.locals.compileDebug = true;
+    // Turn on console logging in development
+    app.use(morgan('dev'));
+    // Turn off caching in development
+    // This sets the Cache-Control HTTP header to no-store, no-cache,
+    // which tells browsers not to cache anything.
+    app.use(helmet.nocache());
 }
 
 if (app.get('env') === 'production') {
-  // Jade options: minify html, no debug intrumentation
-  app.locals.pretty = false;
-  app.locals.compileDebug = false;
-  // Enable If behind nginx, proxy, or a load balancer (e.g. Heroku, Nodejitsu)
-  app.enable('trust proxy', 1);  // trust first proxy
-  // Since our application has signup, login, etc. forms these should be protected
-  // with SSL encryption. Heroku, Nodejitsu and other hosters often use reverse
-  // proxies or load balancers which offer SSL endpoints (but then forward unencrypted
-  // HTTP traffic to the server).  This makes it simpler for us since we don't have to
-  // setup HTTPS in express. When in production we can redirect all traffic to SSL
-  // by using a little middleware.
-  //
-  // In case of a non-encrypted HTTP request, enforce.HTTPS() automatically
-  // redirects to an HTTPS address using a 301 permanent redirect. BE VERY
-  // CAREFUL with this! 301 redirects are cached by browsers and should be
-  // considered permanent.
-  //
-  // NOTE: Use `enforce.HTTPS(true)` if you are behind a proxy or load
-  // balancer that terminates SSL for you (e.g. Heroku, Nodejitsu).
-  app.use(enforce.HTTPS(true));
-  // This tells browsers, "hey, only use HTTPS for the next period of time".
-  // This will set the Strict Transport Security header, telling browsers to
-  // visit by HTTPS for the next ninety days:
-  // TODO: should we actually have this *and* app.use(enforce.HTTPS(true)); above?
-  //       this seems more flexible rather than a hard redirect.
-  var ninetyDaysInMilliseconds = 7776000000;
-  app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds }));
-  // Turn on HTTPS/SSL cookies
-  config.session.proxy = true;
-  config.session.cookie.secure = true;
+    // Jade options: minify html, no debug intrumentation
+    app.locals.pretty = false;
+    app.locals.compileDebug = false;
+    // Enable If behind nginx, proxy, or a load balancer (e.g. Heroku, Nodejitsu)
+    app.enable('trust proxy', 1);  // trust first proxy
+    // Since our application has signup, login, etc. forms these should be protected
+    // with SSL encryption. Heroku, Nodejitsu and other hosters often use reverse
+    // proxies or load balancers which offer SSL endpoints (but then forward unencrypted
+    // HTTP traffic to the server).  This makes it simpler for us since we don't have to
+    // setup HTTPS in express. When in production we can redirect all traffic to SSL
+    // by using a little middleware.
+    //
+    // In case of a non-encrypted HTTP request, enforce.HTTPS() automatically
+    // redirects to an HTTPS address using a 301 permanent redirect. BE VERY
+    // CAREFUL with this! 301 redirects are cached by browsers and should be
+    // considered permanent.
+    //
+    // NOTE: Use `enforce.HTTPS(true)` if you are behind a proxy or load
+    // balancer that terminates SSL for you (e.g. Heroku, Nodejitsu).
+    app.use(enforce.HTTPS(true));
+    // This tells browsers, "hey, only use HTTPS for the next period of time".
+    // This will set the Strict Transport Security header, telling browsers to
+    // visit by HTTPS for the next ninety days:
+    // TODO: should we actually have this *and* app.use(enforce.HTTPS(true)); above?
+    //       this seems more flexible rather than a hard redirect.
+    var ninetyDaysInMilliseconds = 7776000000;
+    app.use(helmet.hsts({ maxAge: ninetyDaysInMilliseconds }));
+    // Turn on HTTPS/SSL cookies
+    config.session.proxy = true;
+    config.session.cookie.secure = true;
 }
 
 // Port to listen on.
@@ -147,14 +164,14 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 // Browsers will post violations to this route
 // https://mathiasbynens.be/notes/csp-reports
 app.post('/csp', bodyParser.json(), function (req, res) {
-  // TODO - requires production level logging
-  if (req.body) {
-    // Just send to debug to see if this is working
-    debug('CSP Violation: ' + JSON.stringify(req.body));
-  } else {
-    debug('CSP Violation: No data received!');
-  }
-  res.status(204).end();
+    // TODO - requires production level logging
+    if (req.body) {
+        // Just send to debug to see if this is working
+        debug('CSP Violation: ' + JSON.stringify(req.body));
+    } else {
+        debug('CSP Violation: No data received!');
+    }
+    res.status(204).end();
 });
 
 // Setup the view engine (jade)
@@ -200,40 +217,40 @@ app.use(methodOverride());
 app.use(session(config.session));
 
 /*
-Thoughts on logging:
+ Thoughts on logging:
 
-** DEVELOPMENT **
+ ** DEVELOPMENT **
 
-In development we can use the standard logger (morgan) and
-debug (https://github.com/visionmedia/debug) for console output
+ In development we can use the standard logger (morgan) and
+ debug (https://github.com/visionmedia/debug) for console output
 
-Debug has an advantage over `console.log` because it only
-outputs when you specifically start node with it enabled.
+ Debug has an advantage over `console.log` because it only
+ outputs when you specifically start node with it enabled.
 
-** PRODUCTION **
+ ** PRODUCTION **
 
-Personally I prefer to stream Express logging to a service
-like Loggly or Papertrail.  That way I don't worry about
-the file system, log shipping/rotating, etc.  Plus these
-have useful features for analyzing the data.
+ Personally I prefer to stream Express logging to a service
+ like Loggly or Papertrail.  That way I don't worry about
+ the file system, log shipping/rotating, etc.  Plus these
+ have useful features for analyzing the data.
 
-If you want to log to a file in production you can do
-as follows. (Be careful however because this can fill up
-your file system unless you handle it properly.) Probably
-best to use a tool like Winston.  But the easy way is
-to send the morgan log stream to ./myLogFile.log:
+ If you want to log to a file in production you can do
+ as follows. (Be careful however because this can fill up
+ your file system unless you handle it properly.) Probably
+ best to use a tool like Winston.  But the easy way is
+ to send the morgan log stream to ./myLogFile.log:
 
-// use {flags: 'w'} to open in write mode, 'a' = append
-var logFile = fs.createWriteStream('./myLogFile.log', { flags: 'a' });
-app.use(morgan('combined', { stream: logFile }));
-*/
+ // use {flags: 'w'} to open in write mode, 'a' = append
+ var logFile = fs.createWriteStream('./myLogFile.log', { flags: 'a' });
+ app.use(morgan('combined', { stream: logFile }));
+ */
 
 // Log requests to Loggly in production
 // Needs to be below session and bodyParser in the stack
 if (app.get('env') === 'production' && config.logging) {
-  app.use(logger({
-    loggly: config.loggly
-  }));
+    app.use(logger({
+        loggly: config.loggly
+    }));
 }
 
 // Security Settings
@@ -255,97 +272,97 @@ app.use(helmet.frameguard('deny'));   // Prevent iframe clickjacking
 //   LEARN HOW IT WORKS. :)
 
 app.use(helmet.contentSecurityPolicy({
-  defaultSrc: [
-    "'self'",
-    'skeleton-app.jit.su'
-  ],
-  scriptSrc: [
-    "'self'",
-    "'unsafe-eval'",
-    "'unsafe-inline'",
-    'http://ajax.googleapis.com',
-    'https://ajax.googleapis.com',
-    'http://www.google-analytics.com',
-    'https://www.google-analytics.com',
-    'http://oss.maxcdn.com',
-    'https://oss.maxcdn.com',
-    'http://cdn.socket.io',
-    'https://cdn.socket.io',
-    'http://checkout.stripe.com',
-    'https://checkout.stripe.com',
-    'http://cdnjs.cloudflare.com',
-    'https://cdnjs.cloudflare.com'
-  ],
-  styleSrc: [
-    "'self'",
-    "'unsafe-inline'",
-    'http://fonts.googleapis.com',
-    'https://fonts.googleapis.com',
-    'http://checkout.stripe.com',
-    'https://checkout.stripe.com'
-  ],
-  fontSrc: [
-    "'self'",
-    'http://fonts.googleapis.com',
-    'https://fonts.googleapis.com',
-    'http://fonts.gstatic.com',
-    'https://fonts.gstatic.com',
-    'htp://themes.googleusercontent.com',
-    'https://themes.googleusercontent.com'
-  ],
-  imgSrc: [
-    "'self'",
-    'data:',
-    'http://img2-ak.lst.fm',
-    'https://gravatar.com',
-    'https://avatars.githubusercontent.com',
-    'http://pbs.twimg.com',
-    'https://pbs.twimg.com',
-    'http://*.4sqi.net',
-    'https://*.4sqi.net',
-    'http://*.media.tumblr.com',
-    'http://userserve-ak.last.fm',
-    'http://graph.facebook.com',
-    'https://graph.facebook.com',
-    'http://*.fbcdn.net',
-    'https://*.fbcdn.net',
-    'http://fbcdn-profile-a.akamaihd.net',
-    'https://fbcdn-profile-a.akamaihd.net',
-    'http://github.global.ssl.fastly.net',
-    'https://github.global.ssl.fastly.net',
-    'http://chart.googleapis.com',
-    'https://chart.googleapis.com',
-    'http://www.google-analytics.com',
-    'https://www.google-analytics.com'
-  ],
-  mediaSrc: [
-    "'self'"
-  ],
-  connectSrc: [ // limit the origins (via XHR, WebSockets, and EventSource)
-    "'self'",
-    'ws://localhost:5000',
-    'ws://localhost:3000',
-    'ws://127.0.0.1:35729/livereload',
-    'wss://skeleton-app.jit.su',
-    'https://api.github.com'
-  ],
-  objectSrc: [  // allows control over Flash and other plugins
-    "'none'"
-  ],
-  frameSrc: [   // origins that can be embedded as frames
-    'http://checkout.stripe.com',
-    'https://checkout.stripe.com',
-  ],
-  sandbox: [
-    'allow-same-origin',
-    'allow-forms',
-    'allow-scripts'
-  ],
-  reportUri: '/report-violation',
-  reportOnly: false,     // set to true if you *only* want to report errors
-  setAllHeaders: false,  // set to true if you want to set all headers
-  disableAndroid: false, // set to true if you want to disable Android (browsers can vary and be buggy)
-  safari5: false         // set to true if you want to force buggy CSP in Safari 5
+    defaultSrc: [
+        "'self'",
+        'skeleton-app.jit.su'
+    ],
+    scriptSrc: [
+        "'self'",
+        "'unsafe-eval'",
+        "'unsafe-inline'",
+        'http://ajax.googleapis.com',
+        'https://ajax.googleapis.com',
+        'http://www.google-analytics.com',
+        'https://www.google-analytics.com',
+        'http://oss.maxcdn.com',
+        'https://oss.maxcdn.com',
+        'http://cdn.socket.io',
+        'https://cdn.socket.io',
+        'http://checkout.stripe.com',
+        'https://checkout.stripe.com',
+        'http://cdnjs.cloudflare.com',
+        'https://cdnjs.cloudflare.com'
+    ],
+    styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        'http://fonts.googleapis.com',
+        'https://fonts.googleapis.com',
+        'http://checkout.stripe.com',
+        'https://checkout.stripe.com'
+    ],
+    fontSrc: [
+        "'self'",
+        'http://fonts.googleapis.com',
+        'https://fonts.googleapis.com',
+        'http://fonts.gstatic.com',
+        'https://fonts.gstatic.com',
+        'htp://themes.googleusercontent.com',
+        'https://themes.googleusercontent.com'
+    ],
+    imgSrc: [
+        "'self'",
+        'data:',
+        'http://img2-ak.lst.fm',
+        'https://gravatar.com',
+        'https://avatars.githubusercontent.com',
+        'http://pbs.twimg.com',
+        'https://pbs.twimg.com',
+        'http://*.4sqi.net',
+        'https://*.4sqi.net',
+        'http://*.media.tumblr.com',
+        'http://userserve-ak.last.fm',
+        'http://graph.facebook.com',
+        'https://graph.facebook.com',
+        'http://*.fbcdn.net',
+        'https://*.fbcdn.net',
+        'http://fbcdn-profile-a.akamaihd.net',
+        'https://fbcdn-profile-a.akamaihd.net',
+        'http://github.global.ssl.fastly.net',
+        'https://github.global.ssl.fastly.net',
+        'http://chart.googleapis.com',
+        'https://chart.googleapis.com',
+        'http://www.google-analytics.com',
+        'https://www.google-analytics.com'
+    ],
+    mediaSrc: [
+        "'self'"
+    ],
+    connectSrc: [ // limit the origins (via XHR, WebSockets, and EventSource)
+        "'self'",
+        'ws://localhost:5000',
+        'ws://localhost:3000',
+        'ws://127.0.0.1:35729/livereload',
+        'wss://skeleton-app.jit.su',
+        'https://api.github.com'
+    ],
+    objectSrc: [  // allows control over Flash and other plugins
+        "'none'"
+    ],
+    frameSrc: [   // origins that can be embedded as frames
+        'http://checkout.stripe.com',
+        'https://checkout.stripe.com',
+    ],
+    sandbox: [
+        'allow-same-origin',
+        'allow-forms',
+        'allow-scripts'
+    ],
+    reportUri: '/report-violation',
+    reportOnly: false,     // set to true if you *only* want to report errors
+    setAllHeaders: false,  // set to true if you want to set all headers
+    disableAndroid: false, // set to true if you want to disable Android (browsers can vary and be buggy)
+    safari5: false         // set to true if you want to force buggy CSP in Safari 5
 }));
 
 // Passport OAUTH Middleware
@@ -354,10 +371,10 @@ app.use(passport.session());
 
 // Keep user, csrf token and config available
 app.use(function (req, res, next) {
-  res.locals.user = req.user;
-  res.locals.config = config;
-  res.locals._csrf = req.csrfToken();
-  next();
+    res.locals.user = req.user;
+    res.locals.config = config;
+    res.locals._csrf = req.csrfToken();
+    next();
 });
 
 // Flash messages
@@ -369,10 +386,10 @@ app.use(flash());
 
 // Dynamically include routes (via controllers)
 fs.readdirSync('./controllers').forEach(function (file) {
-  if (file.substr(-3) === '.js') {
-    var route = require('./controllers/' + file);
-    route.controller(app);
-  }
+    if (file.substr(-3) === '.js') {
+        var route = require('./controllers/' + file);
+        route.controller(app);
+    }
 });
 
 /**
@@ -389,23 +406,23 @@ fs.readdirSync('./controllers').forEach(function (file) {
 
 // Handle 404 Errors
 app.use(function (req, res, next) {
-  res.status(404);
-  debug('404 Warning. URL: ' + req.url);
+    res.status(404);
+    debug('404 Warning. URL: ' + req.url);
 
-  // Respond with html page
-  if (req.accepts('html')) {
-    res.render('error/404', { url: req.url });
-    return;
-  }
+    // Respond with html page
+    if (req.accepts('html')) {
+        res.render('error/404', { url: req.url });
+        return;
+    }
 
-  // Respond with json
-  if (req.accepts('json')) {
-    res.send({ error: 'Not found!' });
-    return;
-  }
+    // Respond with json
+    if (req.accepts('json')) {
+        res.send({ error: 'Not found!' });
+        return;
+    }
 
-  // Default to plain-text. send()
-  res.type('txt').send('Error: Not found!');
+    // Default to plain-text. send()
+    res.type('txt').send('Error: Not found!');
 
 });
 
@@ -414,57 +431,57 @@ app.use(function (req, res, next) {
 
 // Handle 403 Errors
 app.use(function (err, req, res, next) {
-  if (err.status === 403) {
-    res.status(err.status);
-    debug('403 Not Allowed. URL: ' + req.url + ' Err: ' + err);
+    if (err.status === 403) {
+        res.status(err.status);
+        debug('403 Not Allowed. URL: ' + req.url + ' Err: ' + err);
 
-    // Respond with HTML
-    if (req.accepts('html')) {
-      res.render('error/403', {
-        error: err,
-        url: req.url
-      });
-      return;
+        // Respond with HTML
+        if (req.accepts('html')) {
+            res.render('error/403', {
+                error: err,
+                url: req.url
+            });
+            return;
+        }
+
+        // Respond with json
+        if (req.accepts('json')) {
+            res.send({ error: 'Not Allowed!' });
+            return;
+        }
+
+        // Default to plain-text. send()
+        res.type('txt').send('Error: Not Allowed!');
+
+    } else {
+        // Since the error is not a 403 pass it along
+        return next(err);
     }
-
-    // Respond with json
-    if (req.accepts('json')) {
-      res.send({ error: 'Not Allowed!' });
-      return;
-    }
-
-    // Default to plain-text. send()
-    res.type('txt').send('Error: Not Allowed!');
-
-  } else {
-    // Since the error is not a 403 pass it along
-    return next(err);
-  }
 });
 
 // Production 500 error handler (no stacktraces leaked to public!)
 if (app.get('env') === 'production') {
-  app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    debug('Error: ' + (err.status || 500).toString().red.bold + ' ' + err);
-    res.render('error/500', {
-      error: {}  // don't leak information
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        debug('Error: ' + (err.status || 500).toString().red.bold + ' ' + err);
+        res.render('error/500', {
+            error: {}  // don't leak information
+        });
     });
-  });
 }
 
 // Development 500 error handler
 if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    debug('Error: ' + (err.status || 500).toString().red.bold + ' ' + err);
-    res.render('error/500', {
-      error: err
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        debug('Error: ' + (err.status || 500).toString().red.bold + ' ' + err);
+        res.render('error/500', {
+            error: err
+        });
     });
-  });
 
-  // Final error catch-all just in case...
-  app.use(errorHandler());
+    // Final error catch-all just in case...
+    app.use(errorHandler());
 }
 
 /*
@@ -480,37 +497,37 @@ if (app.get('env') === 'development') {
  */
 
 db.on('error', function () {
-  debug('MongoDB Connection Error. Please make sure MongoDB is running.'.red.bold);
-  process.exit(0);
+    debug('MongoDB Connection Error. Please make sure MongoDB is running.'.red.bold);
+    process.exit(0);
 });
 
 db.on('open', function () {
-  debug('Mongodb ' + 'connected!'.green.bold);
+    debug('Mongodb ' + 'connected!'.green.bold);
 
-  // "server.listen" for socket.io
-  server.listen(app.get('port'), function () {
+    // "server.listen" for socket.io
+    server.listen(app.get('port'), function () {
 
-    // Test for correct node version as spec'ed in package.info
-    if (!semver.satisfies(process.versions.node, config.engine)) {
-      debug('Error: unsupported version of Node or io.js!'.red.bold);
-      debug(config.name.red.bold + ' needs Node or io.js version '.red.bold + config.engine.red.bold);
-      process.exit(0);
-    }
+        // Test for correct node version as spec'ed in package.info
+        if (!semver.satisfies(process.versions.node, config.engine)) {
+            debug('Error: unsupported version of Node or io.js!'.red.bold);
+            debug(config.name.red.bold + ' needs Node or io.js version '.red.bold + config.engine.red.bold);
+            process.exit(0);
+        }
 
-    // Log how we are running
-    debug('listening on port ' + app.get('port').toString().green.bold);
-    debug('listening in ' + app.settings.env.green.bold + ' mode.');
-    debug('Ctrl+C'.green.bold + ' to shut down. ;)');
+        // Log how we are running
+        debug('listening on port ' + app.get('port').toString().green.bold);
+        debug('listening in ' + app.settings.env.green.bold + ' mode.');
+        debug('Ctrl+C'.green.bold + ' to shut down. ;)');
 
-    // Exit cleanly on Ctrl+C
-    process.on('SIGINT', function () {
-      io.close();  // close socket.io
-      console.log('\n');
-      debug('has ' + 'shutdown'.green.bold);
-      debug('was running for ' + Math.round(process.uptime()).toString().green.bold + ' seconds.');
-      process.exit(0);
+        // Exit cleanly on Ctrl+C
+        process.on('SIGINT', function () {
+            io.close();  // close socket.io
+            console.log('\n');
+            debug('has ' + 'shutdown'.green.bold);
+            debug('was running for ' + Math.round(process.uptime()).toString().green.bold + ' seconds.');
+            process.exit(0);
+        });
     });
-  });
 });
 
 /**
@@ -523,24 +540,24 @@ db.on('open', function () {
 var connectedCount = 0;
 
 io.on('connection', function (socket) {
-  connectedCount += 1;
-  // Listen for pageview messages from clients
-  socket.on('pageview', function (message) {
-    var ip = socket.handshake.headers['x-forwarded-for'] || socket.client.conn.remoteAddress || socket.handshake.address;
-    var url = message;
-    // Broadcast dashboard update (to all clients in default namespace)
-    io.emit('dashUpdate', {
-      connections: connectedCount,
-      ip: ip,
-      url: url,
-      timestamp: new Date()
+    connectedCount += 1;
+    // Listen for pageview messages from clients
+    socket.on('pageview', function (message) {
+        var ip = socket.handshake.headers['x-forwarded-for'] || socket.client.conn.remoteAddress || socket.handshake.address;
+        var url = message;
+        // Broadcast dashboard update (to all clients in default namespace)
+        io.emit('dashUpdate', {
+            connections: connectedCount,
+            ip: ip,
+            url: url,
+            timestamp: new Date()
+        });
     });
-  });
-  // Update dashboard connections on disconnect events
-  socket.on('disconnect', function () {
-    connectedCount -= 1;
-    io.emit('dashUpdate', {
-      connections: connectedCount
+    // Update dashboard connections on disconnect events
+    socket.on('disconnect', function () {
+        connectedCount -= 1;
+        io.emit('dashUpdate', {
+            connections: connectedCount
+        });
     });
-  });
 });

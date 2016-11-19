@@ -150,7 +150,7 @@
 .bg-brand3 {    background-color: @brand3; }
 .bg-brand4 {    background-color: @brand4; }
 .bg-brand5 {    background-color: @brand5; }
-.bg-brand6 {    background-color: @brand6; }
+.bg-brand6 {    background-image: url("/img/cd-background-4.jpg");}
 
 // Bootstrap provides an incomplete grayscale
 // because it doesn't define white and black.
@@ -290,8 +290,31 @@ h1, h2 {
  * Navbar
  */
 
+.bg-brand6 .navbar-default {
+  border: 0;
+  background-color: transparent;
+}
+
 @navbar-default-brand-color: @gray-darker;
 @navbar-default-link-hover-bg: darken(@navbar-default-bg, 6.5%);
+
+.button.hollow {
+  border: 1px solid white;
+  color: white;
+  border-radius: 0;
+}
+.button.hollow, .button.hollow:focus, .button.hollow:hover {
+  background-color: transparent;
+}
+
+.bg-brand6 .navbar-default .navbar-nav>li>a, .navbar-default .navbar-text {
+  color: white;
+}
+
+.bg-brand6 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+  color: black;
+  background-color: transparent;
+}
 
 .navbar-nav .profile-image {
   width: 30px;
@@ -306,6 +329,18 @@ h1, h2 {
   //padding-left: 45px;
   margin-top: -1px;
   margin-left: 15px;
+}
+
+.bg-brand6 .navbar-default .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #dbdbdb;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+  background-color: transparent;
 }
 
 /**
@@ -335,7 +370,7 @@ h1, h2 {
 .jumbotron,
 .mini-tron {
   text-shadow: 0 1px 0 rgba(0,0,0,.2);
-  background-color: @brand6;
+  background-color: transparent;
   //background-image: -webkit-gradient(linear, left top, left bottom, from(@brand1-darker), to(@brand1));
   //background-image: -webkit-linear-gradient(top, @brand1-darker 0%, @brand1 100%);
   //background-image:      -o-linear-gradient(top, @brand1-darker 0%, @brand1 100%);
@@ -555,3 +590,156 @@ a.noDecoration:hover {
 }
 @media (min-width: 1170px) {
 }
+
+
+
+
+
+//
+//.main-content {
+//  /* you need to assign a min-height to the main content so that the children can inherit it*/
+//  height: 100%;
+//  position: relative;
+//  z-index: 1;
+//}
+//
+//.fixed-bg {
+//  position: relative;
+//  min-height: 100%;
+//  background-size: cover;
+//  background-repeat: no-repeat;
+//  background-position: center center;
+//  z-index: 1;
+//}
+//.fixed-bg h1, .fixed-bg h2 {
+//  position: absolute;
+//  left: 50%;
+//  top: 50%;
+//  bottom: auto;
+//  right: auto;
+//  -webkit-transform: translateX(-50%) translateY(-50%);
+//  -moz-transform: translateX(-50%) translateY(-50%);
+//  -ms-transform: translateX(-50%) translateY(-50%);
+//  -o-transform: translateX(-50%) translateY(-50%);
+//  transform: translateX(-50%) translateY(-50%);
+//  width: 90%;
+//  max-width: 1170px;
+//  text-align: center;
+//  font-size: 30px;
+//  font-size: 1.875rem;
+//  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+//  color: white;
+//}
+//.fixed-bg.bg-1 {
+//  background-image: url("/img/cd-background-1.jpg");
+//}
+//.fixed-bg.bg-2 {
+//  background-image: url("/img/cd-background-2.jpg");
+//}
+//.fixed-bg.bg-3 {
+//  background-image: url("/img/cd-background-3.jpg");
+//}
+//.fixed-bg.bg-4 {
+//  background-image: url("/img/cd-background-4.jpg");
+//}
+//@media only screen and (min-width: 768px) {
+//  .fixed-bg h1, .fixed-bg h2 {
+//    font-size: 36px;
+//  }
+//}
+//@media only screen and (min-width: 1170px) {
+//  .fixed-bg {
+//    background-attachment: fixed;
+//  }
+//  .fixed-bg h1, .fixed-bg h2 {
+//    font-size: 48px;
+//    font-weight: 300;
+//  }
+//}
+//
+//.scrolling-bg {
+//  position: relative;
+//  padding: 4em 0;
+//  line-height: 1.6;
+//  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+//  z-index: 2;
+//}
+//.scrolling-bg.color-1 {
+//  background-color: #3d3536;
+//  color: #a6989a;
+//}
+//.scrolling-bg.color-2 {
+//  background-color: #99a478;
+//  color: #3d3536;
+//}
+//.scrolling-bg.color-3 {
+//  background-color: #b4d7a8;
+//  color: #3d3536;
+//}
+//@media only screen and (min-width: 768px) {
+//  .scrolling-bg {
+//    padding: 8em 0;
+//    font-size: 20px;
+//    font-size: 1.25rem;
+//    line-height: 2;
+//    font-weight: 300;
+//  }
+//}
+
+
+section#about {
+  padding: 10rem;
+  text-align: center;
+  background-color: blue;
+}
+
+.hero {
+  //background: url("http://wallpoper.com/images/00/34/39/15/circuit-pcb_00343915.jpg") no-repeat scroll center center;
+  background-size: cover;
+  height: 100vh;
+  position: initial; }
+.hero:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+  opacity: .8; }
+.hero .intro {
+  padding: 3rem;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
+.hero h1 {
+  color: #fff;
+  font-size: 3.5rem;
+  line-height: 1.5em;
+  letter-spacing: -0.025em;
+  font-weight: 300;
+  text-align: center; }
+.hero p, .fixed-bg.bg-1 p {
+  color: #fff;
+  line-height: 1.75em;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 2rem; }
+.about .tech-img {
+  background: url("http://static.pexels.com/wp-content/uploads/2015/02/apple-hand-iphone-6-4322-525x350.jpg") no-repeat center center;
+  background-size: cover;
+  height: 9rem;
+  width: 9rem;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto; }
+@media only screen and (min-width: 40.063em) {
+  .about .tech-img {
+    height: 18rem;
+    width: 18rem; }
+  .about h1 {
+    padding-top: 4.5rem;
+    text-align: right;
+    font-size: 2.5rem; }
+  .about p {
+    text-align: right; } }
