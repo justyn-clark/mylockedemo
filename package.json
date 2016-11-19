@@ -6,12 +6,37 @@
   "subdomain": "mylucke-app",
   "description": "A friendly cool app",
   "author": "Justyn Clark",
+  "keywords": [
+    "skeleton",
+    "node",
+    "express",
+    "passport",
+    "bootstrap",
+    "fontawesome",
+    "framework"
+  ],
+  "homepage": "http://skeleton-app.jit.su",
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/mylucke.git"
+  },
+  "bugs": "https://github.com/dstroot/skeleton/issues",
+  "contributors": "https://github.com/dstroot/skeleton/graphs/contributors",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/dstroot/skeleton/master/LICENSE"
+    }
+  ],
   "scripts": {
     "start": "node app.js",
     "test": "mocha",
     "bbl": "webpack public/main.js public/bundle/bundle.js",
     "auto": "webpack",
     "rebundle": "webpack"
+  },
+  "engines": {
+    "node": "4.x.x"
   },
   "dependencies": {
     "async": "^1.4.2",
